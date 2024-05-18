@@ -13,6 +13,6 @@ const jobSchema = new mongoose.Schema({
     created_at: Date,
 });
 
-const Job = new mongoose.model("Job", jobSchema);
+const Job = new mongoose.model("Jobs", jobSchema);
 
 module.exports = Job;

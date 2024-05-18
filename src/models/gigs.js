@@ -10,6 +10,6 @@ const gigSchema = new mongoose.Schema({
     created_at: Date,
 });
 
-const Gig = new mongoose.model("Gig", gigSchema);
+const Gig = new mongoose.model("Gigs", gigSchema);
 
 module.exports = Gig;
