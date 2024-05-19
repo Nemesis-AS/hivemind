@@ -3,10 +3,16 @@ const Customer = require("../models/customers");
 const { broadcastJSON } = require("../utils/hive");
 
 async function getJobListings(req, res) {
-    const jobs = await Job.find();
+    const { position } = req.query;
+
+    let queryObj = {};
+    if (position) {
+        queryObj.skills = position;
+    }
+
+    const jobs = await Job.find().where(queryObj);
 
     const data = await Promise.all(jobs.map(async job => {
-        // const jb = job;
         const creator = await Customer.findOne().where({ id: job.job_creator });
 
         return {
@@ -16,6 +22,24 @@ async function getJobListings(req, res) {
     }));
 
     res.json(data);
+}
+
+async function getJobByID(req, res) {
+    const { id } = req.params;
+
+    if (!id) {
+        res.status(400).send("Malformed Parameters");
+        return;
+    }
+
+    const job = await Job.findOne().where({ id });
+    const creator = await Customer.findOne().where({ id: job.job_creator });
+
+    res.json({job, creator});
+}
+
+async function searchJobByTitle(req, res) {
+    // @todo!
 }
 
 async function addJobListing(req, res) {
@@ -75,4 +99,5 @@ async function addJobListing(req, res) {
 module.exports = {
     getJobListings,
     addJobListing,
+    getJobByID,
 };

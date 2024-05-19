@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
+    res.sendFile("./src/views/index.html", { root: "." });
+});
+
+router.get("/jobs", (req, res) => {
     res.sendFile("./src/views/jobs.html", { root: "." });
 });
 

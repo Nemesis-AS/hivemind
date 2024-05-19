@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getJobListings, addJobListing } = require("../controllers/jobs");
+const { getJobListings, addJobListing, getJobByID } = require("../controllers/jobs");
 const { getGigs, addGig } = require("../controllers/gigs");
 const { addReview, fetchReviewsByProfile } = require("../controllers/reviews");
 const { getOffersForJob, createOffer } = require("../controllers/offers");
@@ -9,6 +9,7 @@ const { getApplicationsForJob, createApplication } = require("../controllers/app
 
 router.get("/jobs", getJobListings);
 router.post("/jobs", addJobListing);
+router.get("/jobs/:id", getJobByID);
 
 router.get("/gigs", getGigs);
 router.post("/gigs", addGig);

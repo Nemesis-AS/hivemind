@@ -1,41 +1,28 @@
 const listingEl = document.getElementById("listings");
 
 async function fetchJobListings(search) {
-    const res = await fetch(`/api/jobs${search}`);
+    const res = await fetch(`/api/gigs`);
     const json = await res.json();
 
     console.log(json);
 
     const html = json.reduce((txt, item) => {
-        return txt + createListingCard(item.job, item.creator);
+        return txt + createListingCard(item);
     }, "");
 
     listingEl.innerHTML = html;
-
-    document.querySelectorAll(".job-card").forEach(btn => {
-        btn.addEventListener("click", e => {
-            getJobByID(btn.dataset.id);
-        });
-    });
 }
 
-async function getJobByID(id) {
-    const res = await fetch(`/api/jobs/${id}`);
-    const json = await res.json();
-
-    updateListingView(json.job, json.creator);
-}
-
-function createListingCard({ title, openings, job_type, salary, location, id, created_at }, creator) {
-    return `<button class="job-card" data-id="${id}">
+function createListingCard({ title, description, openings, skills, job_type, price, location, id, created_at }) {
+    return `<button class="job-card">
     <img
-        src="${creator.profile_image}"
+        src="images/google.png"
         alt="google"
         class="card-icon"
     />
     <div class="card-text">
         <div class="text-left">
-            <h3 class="card-title">${creator.username}</h3>
+            <h3 class="card-title">Google</h3>
             <p class="card-post">
                 ${title}
             </p>
@@ -77,7 +64,7 @@ function createListingCard({ title, openings, job_type, salary, location, id, cr
                             d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
                         />
                     </svg>
-                    ${formatDate(created_at)}
+                    ${created_at}
                 </p>
                 <p>
                     <svg
@@ -117,49 +104,25 @@ function createListingCard({ title, openings, job_type, salary, location, id, cr
         </div>
 
         <div class="text-right">
-            <p><b>₹${salary}</b><span>/month</span></p>
+            <p><b>₹${price}</b></p>
         </div>
     </div>
 </button>`;
 }
 
-function updateListingView({ title, description, openings, skills, job_type, salary, location, id, created_at }, creator) {
-    const companyImg = document.getElementById("companyImg");
+function updateListingView({ title, description, openings, skills, job_type, salary, location, id, created_at }) {
     const companyTitleEl = document.getElementById("jobTitle");
     const postEl = document.getElementById("jobPost");
     const locEl = document.getElementById("jobLocation");
     const aboutCompanyEl = document.getElementById("aboutCompany");
     const qualificationsEl = document.getElementById("jobQualifications");
     const applyBtn = document.getElementById("applyBtn");
-    const openingsEl = document.getElementById("openings");
-    const jobTypeEl = document.getElementById("jobType");
-    const salaryEl = document.getElementById("salary");
-    const skillEl = document.getElementById("skills");
 
-    companyImg.src = creator.profile_image;
-    companyTitleEl.textContent = creator.username;
-    aboutCompanyEl.textContent = creator.about;
+    // titleEl.textContent = title;
     postEl.textContent = title;
     locEl.textContent = location;
+    qualificationsEl.textContent = skills;
     applyBtn.dataset.id = id;
-    qualificationsEl.textContent = description;
-    openingsEl.textContent = openings;
-    jobTypeEl.textContent = job_type;
-    salaryEl.textContent = salary;
-
-    console.log(creator);
-
-    const skillHTML = skills.reduce((txt, skill) => {
-        return txt + `<div class="pill">${skill}</div>`
-    }, "");
-
-    skillEl.innerHTML = skillHTML;
-}
-
-function formatDate(timestamp) {
-    const date = new Date(timestamp);
-
-    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
 }
 
 
