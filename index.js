@@ -5,21 +5,12 @@ const app = express();
 
 const PORT = 3000;
 
-const { getJobListings, addJobListing } = require("./src/controllers/jobs");
-const { getGigs, addGig } = require("./src/controllers/gigs");
-const { fetchReviews, addReview } = require("./src/controllers/reviews");
+const apiRouter = require("./src/routers/apiRouter");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/jobs", getJobListings);
-app.post("/jobs", addJobListing);
-
-app.get("/gigs", getGigs);
-app.post("/gigs", addGig);
-
-app.get("/reviews", fetchReviews);
-app.post("/reviews", addReview);
+app.use("/api", apiRouter);
 
 app.listen(PORT, async () => {
     console.log("Running on PORT " + PORT);
