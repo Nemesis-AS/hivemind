@@ -1,10 +1,38 @@
 const Gig = require("../models/gigs");
+const Customer = require("../models/customers");
 const { broadcastJSON } = require("../utils/hive");
 
 async function getGigs(req, res) {
     const gigs = await Gig.find();
-    
-    res.json(gigs);
+
+    const data = await Promise.all(
+        gigs.map(async (gig) => {
+            const creator = await Customer.findOne().where({
+                id: gig.gig_creator,
+            });
+
+            return {
+                gig,
+                creator,
+            };
+        })
+    );
+
+    res.json(data);
+}
+
+async function getGigByID(req, res) {
+    const { id } = req.params;
+
+    if (!id) {
+        res.status(400).send("Malformed Parameters");
+        return;
+    }
+
+    const gig = await Gig.findOne().where({ id });
+    const creator = await Customer.findOne().where({ id: gig.gig_creator });
+
+    res.json({ gig, creator });
 }
 
 async function addGig(req, res) {
@@ -30,15 +58,16 @@ async function addGig(req, res) {
 
     await Gig.create({
         id: confirmation.id,
-        ...json
+        ...json,
     });
     res.json({
         id: confirmation.id,
-        ...json
+        ...json,
     });
 }
 
 module.exports = {
     getGigs,
     addGig,
+    getGigByID,
 };

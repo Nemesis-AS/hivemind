@@ -12,14 +12,18 @@ async function getJobListings(req, res) {
 
     const jobs = await Job.find().where(queryObj);
 
-    const data = await Promise.all(jobs.map(async job => {
-        const creator = await Customer.findOne().where({ id: job.job_creator });
+    const data = await Promise.all(
+        jobs.map(async (job) => {
+            const creator = await Customer.findOne().where({
+                id: job.job_creator,
+            });
 
-        return {
-            job,
-            creator
-        }
-    }));
+            return {
+                job,
+                creator,
+            };
+        })
+    );
 
     res.json(data);
 }
@@ -35,11 +39,21 @@ async function getJobByID(req, res) {
     const job = await Job.findOne().where({ id });
     const creator = await Customer.findOne().where({ id: job.job_creator });
 
-    res.json({job, creator});
+    res.json({ job, creator });
 }
 
 async function searchJobByTitle(req, res) {
     // @todo!
+    const { search } = req.query;
+
+    if (!search) {
+        res.status(400).send("Malformed Parameters");
+        return;
+    }
+
+    const jobs = await Job.find().where({ title: { $regex: search } });
+
+    res.json(jobs);
 }
 
 async function addJobListing(req, res) {
@@ -88,11 +102,11 @@ async function addJobListing(req, res) {
 
     await Job.create({
         id: confirmation.id,
-        ...json
+        ...json,
     });
     res.json({
         id: confirmation.id,
-        ...json
+        ...json,
     });
 }
 
@@ -100,4 +114,5 @@ module.exports = {
     getJobListings,
     addJobListing,
     getJobByID,
+    searchJobByTitle,
 };
