@@ -39,6 +39,6 @@ npm run dev
 
 - [ ] Add query filters for db
 - [ ] Routes for user/customer auth
-- [ ] Routes for applications/offers
+- [x] Routes for applications/offers
 - [ ] Add views
 - [ ] Add an init db function
