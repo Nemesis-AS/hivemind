@@ -247,7 +247,97 @@ ul li{
   font-weight: bold; /* Highlight the skills section */
   color: #333; /* Change text color for skills highlight (optional) */
 }
+/* Styles for the main Job Offers section */
+#job-offers {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
 
+#job-offers h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Styles for offer containers (accepted/rejected) */
+.offer-container {
+  margin-bottom: 20px; /* Add spacing between offer categories */
+  position: relative; /* Needed for hover effects on some elements */
+}
+
+.offer-container.accepted {
+  border-left: 5px solid green; /* Green border for accepted offers */
+  padding-left: 10px; /* Add padding after border */
+}
+
+.offer-container.rejected {
+  border-left: 5px solid red; /* Red border for rejected offers */
+  padding-left: 10px; /* Add padding after border */
+}
+
+/* Styles for the offer list */
+.offer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.offer-list li {
+  display: flex;
+  justify-content: space-between; /* Align items horizontally */
+  align-items: center; /* Vertically align content within list item */
+  padding: 10px;
+  border-bottom: 1px solid #ffffff;
+  cursor: pointer; /* Indicate interactivity on hover */
+}
+
+.offer-list li:hover {
+  background-color: #eee; /* Subtle background change on hover */
+}
+
+/* Styles for offer details and reason */
+.company-name,
+.job-title {
+  font-weight: bold;
+}
+
+.offer-details,
+.offer-reason {
+  font-size: 0.8em; /* Slightly smaller text for details and reasons */
+  color: #666;
+}
+
+/* Styles for action buttons */
+.action-btn {
+  background-color: transparent;
+  border: 1px solid #fffefe;
+  border-radius: 3px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  height: 50px;
+  width: 100px;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  text-align: center;
+}
+
+.action-btn:hover {
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Styles for "View Details" button (hover effect) */
+.view-details:hover {
+  /* Add a subtle underline on hover to indicate clickability */
+  text-decoration: underline;
+}
+#job-offers img{
+  height: 55px;
+  width: 55px;
+  border-radius: 20px;
+}
 
 
 
