@@ -1,5 +1,5 @@
 # Hivemind
-![Image](assets/logo.jpg)
+![Image](assets/images/logo.jpg)
 
 Hivemind is a Blockchain-based platform that connects freelancers and jobseekers directly with clients, eliminating the need for middlemen and addressing the challenges of the gig economy
 

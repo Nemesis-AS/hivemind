@@ -4,6 +4,7 @@ const customerSchema = new mongoose.Schema({
     id: String,
     username: String,
     profile_image: String,
+    about: String,
     posting_key: String,
     created_at: Date
 });

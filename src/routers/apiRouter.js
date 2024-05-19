@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { getJobListings, addJobListing } = require("../controllers/jobs");
 const { getGigs, addGig } = require("../controllers/gigs");
-const { fetchReviews, addReview } = require("../controllers/reviews");
+const { addReview, fetchReviewsByProfile } = require("../controllers/reviews");
 const { getOffersForJob, createOffer } = require("../controllers/offers");
 const { getApplicationsForJob, createApplication } = require("../controllers/applications");
 
@@ -13,7 +13,7 @@ router.post("/jobs", addJobListing);
 router.get("/gigs", getGigs);
 router.post("/gigs", addGig);
 
-router.get("/reviews", fetchReviews);
+router.get("/reviews", fetchReviewsByProfile);
 router.post("/reviews", addReview);
 
 router.get("/applications", getApplicationsForJob);

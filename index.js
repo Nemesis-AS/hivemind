@@ -6,10 +6,14 @@ const app = express();
 const PORT = 3000;
 
 const apiRouter = require("./src/routers/apiRouter");
+const viewRouter = require("./src/routers/viewRouter");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static("assets"));
+
+app.use("/", viewRouter);
 app.use("/api", apiRouter);
 
 app.listen(PORT, async () => {

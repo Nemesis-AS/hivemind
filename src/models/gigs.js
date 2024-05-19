@@ -7,6 +7,7 @@ const gigSchema = new mongoose.Schema({
     title: String,
     description: String,
     skills: Array,
+    image: String,
     created_at: Date,
 });
 

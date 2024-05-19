@@ -1,10 +1,21 @@
 const Job = require("../models/jobs");
+const Customer = require("../models/customers");
 const { broadcastJSON } = require("../utils/hive");
 
 async function getJobListings(req, res) {
     const jobs = await Job.find();
 
-    res.json(jobs);
+    const data = await Promise.all(jobs.map(async job => {
+        // const jb = job;
+        const creator = await Customer.findOne().where({ id: job.job_creator });
+
+        return {
+            job,
+            creator
+        }
+    }));
+
+    res.json(data);
 }
 
 async function addJobListing(req, res) {
