@@ -15,6 +15,18 @@ async function getApplicationsForJob(req, res) {
     res.json(applications);
 }
 
+async function getApplicationsByUser(req, res) {
+    const { id } = req.params;
+
+    if (!id) {
+        res.status(400).send("Malformed Parameters!");
+        return;
+    }
+
+    const applications = await Application.find().where({ dev_id: id });
+    res.json(applications);
+}
+
 async function createApplication(req, res) {
     const { jobID, devID } = req.body;
 
@@ -47,4 +59,5 @@ async function createApplication(req, res) {
 module.exports = {
     getApplicationsForJob,
     createApplication,
+    getApplicationsByUser,
 };

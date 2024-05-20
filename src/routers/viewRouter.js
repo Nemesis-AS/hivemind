@@ -13,4 +13,8 @@ router.get("/gigs", (req, res) => {
     res.sendFile("./src/views/gigs.html", { root: "." });
 });
 
+router.get("/profile", (req, res) => {
+    res.sendFile("./src/views/profile.html", { root: "." });
+});
+
 module.exports = router;

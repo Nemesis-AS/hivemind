@@ -2,14 +2,14 @@ const Review = require("../models/reviews");
 const { broadcastJSON } = require("../utils/hive");
 
 async function fetchReviewsByProfile(req, res) {
-    const { devID } = req.query;
+    const { id } = req.params;
 
-    if (!devID) {
+    if (!id) {
         res.status(400).send("Malformed Parameters");
         return;
     }
 
-    const reviews = await Review.find().where({ dev_id: devID });
+    const reviews = await Review.find().where({ dev_id: id });
 
     res.json(reviews);
 }
