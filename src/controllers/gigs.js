@@ -37,11 +37,13 @@ async function getGigByID(req, res) {
 
 async function addGig(req, res) {
     const { devID, price, title, description, skills } = req.body;
+    // console.log(devID, price, title, description, skills);
 
     if (!(devID && price && title && description && skills)) {
         res.status(400).send("Malformed parameters!");
         return;
     }
+
 
     const timestamp = Date.now();
 
@@ -54,14 +56,14 @@ async function addGig(req, res) {
         created_at: timestamp,
     };
 
-    const confirmation = await broadcastJSON(json);
+    // const confirmation = await broadcastJSON(json);
 
     await Gig.create({
-        id: confirmation.id,
+        // id: confirmation.id,
         ...json,
     });
     res.json({
-        id: confirmation.id,
+        // id: confirmation.id,
         ...json,
     });
 }

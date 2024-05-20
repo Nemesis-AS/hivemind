@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Create Job | Hivemind</title>
+        <link rel="stylesheet" href="../css/createForms.css" />
+    </head>
+    <body>
+        <header>
+            <div class="brand">
+                <!-- <img src="images/wplogo.jpg" alt="icon" /> -->
+                Hivemind
+            </div>
+
+            <nav>
+                <li>
+                    <a href="/" class="navbar-link hover-1" data-nav-toggler
+                        >Home</a
+                    >
+                </li>
+
+                <li>
+                    <a href="/jobs" class="navbar-link hover-1" data-nav-toggler
+                        >Jobs</a
+                    >
+                </li>
+
+                <li>
+                    <a href="/gigs" class="navbar-link hover-1" data-nav-toggler
+                        >Gigs</a
+                    >
+                </li>
+            </nav>
+
+            <button>Profile</button>
+        </header>
+
+        <main>
+            <div class="title">Create Job</div>
+
+            <form action="#">
+                <label for="title">
+                    <span>Title</span>
+                    <input type="text" placeholder="Title..." id="title" />
+                </label>
+
+                <label for="description">
+                    <span>Description</span>
+                    <textarea
+                        name="description"
+                        id="description"
+                        placeholder="Enter description"
+                        rows="5"
+                    ></textarea>
+                </label>
+
+                <label for="salary">
+                    <span>Salary</span>
+                    <input type="number" name="salary" id="salary" />
+                </label>
+
+                <label for="location">
+                    <span>Location</span>
+                    <input type="text" placeholder="location" id="location" />
+                </label>
+
+                <label for="openings">
+                    <span>Openings</span>
+                    <input type="number" placeholder="Openings" id="openings" />
+                </label>
+
+                <label for="jobtype">
+                    <span>Job Type</span>
+                    <select name="jobtype" id="jobtype">
+                        <option value="full time" selected>Full Time</option>
+                        <option value="part time">Part Time</option>
+                    </select>
+                </label>
+
+                <button id="submitBtn" type="button">Create</button>
+            </form>
+
+            <div class="alertDiv hidden" id="alertDiv">
+                <div class="alert">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="icon"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m4.5 12.75 6 6 9-13.5"
+                        />
+                    </svg>
+                    Job Created Successfully!
+                </div>
+            </div>
+        </main>
+
+        <script>
+            const submitBtn = document.getElementById("submitBtn");
+
+            const titleEl = document.getElementById("title");
+            const descEl = document.getElementById("description");
+            const salaryEl = document.getElementById("salary");
+            const locEl = document.getElementById("location");
+            const openingsEl = document.getElementById("openings");
+            const jobTypeEl = document.getElementById("jobtype");
+
+            async function submitForm() {
+                const formData = {
+                    title: titleEl.value,
+                    description: descEl.value,
+                    salary: salaryEl.value,
+                    creator: localStorage.getItem("customerID"),
+                    location: locEl.value,
+                    openings: openingsEl.value,
+                    jobType: jobTypeEl.value,
+                    skills: ["HTML", "CSS", "JS"],
+
+                };
+
+                const res = await fetch("/api/jobs", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const json = await res.json();
+
+                if (json.created_at) {
+                    showAlert();
+                }
+            }
+
+            function showAlert() {
+                document.getElementById("alertDiv").classList.remove("hidden");
+
+                setTimeout(
+                    () =>
+                        document
+                            .getElementById("alertDiv")
+                            .classList.add("hidden"),
+                    3000
+                );
+            }
+
+            async function img2b64(imgEl) {
+                const file = imgEl.files[0];
+                if (!file) return "";
+                const data = await file.arrayBuffer();
+                const binary = new Uint8Array(data).reduce(
+                    (st, byte) => st + String.fromCharCode(byte),
+                    ""
+                );
+                return btoa(binary);
+            }
+
+            submitBtn.addEventListener("click", (e) => {
+                submitForm();
+            });
+        </script>
+    </body>
+</html>
