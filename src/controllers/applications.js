@@ -35,7 +35,7 @@ async function createApplication(req, res) {
         return;
     }
 
-    const timestamp = new Date.now();
+    const timestamp = Date.now();
 
     const json = {
         dev_id: devID,

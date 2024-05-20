@@ -111,3 +111,6 @@ window.addEventListener("resize", function () {
 
   moveSliderItem();
 });
+
+localStorage.setItem("devID", "User1");
+localStorage.setItem("customerID", "Google");

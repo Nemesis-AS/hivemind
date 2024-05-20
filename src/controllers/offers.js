@@ -21,7 +21,7 @@ async function createOffer(req, res) {
         return;
     }
 
-    const timestamp = new Date.now();
+    const timestamp = Date.now();
 
     const json = {
         customer_id: customerID,

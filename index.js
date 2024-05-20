@@ -18,6 +18,6 @@ app.use("/api", apiRouter);
 
 app.listen(PORT, async () => {
     console.log("Running on PORT " + PORT);
-    await mongoose.connect("mongodb://127.0.0.1:27017/hivemind");
+    await mongoose.connect(process.env.DB_PATH, { dbName: "hivemind" });
     console.log("Connected with DB");
 });

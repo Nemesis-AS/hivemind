@@ -17,7 +17,8 @@
             <div class="brand">Hivemind</div>
             <nav>
                 <a href="/">Home</a>
-                <a href="/">Profile</a>
+                <a href="/jobs">Jobs</a>
+                <a href="/gigs">Gigs</a>
             </nav>
             <div class="profile">
                 <div class="profile-name">
@@ -158,6 +159,30 @@
                 <div style="width: 100%; min-height: 400px; display: flex; align-items: center; justify-content: center; border: 4px dashed #aaaaaa; border-radius: 1rem;">Select a gig to view description</div>
             </section>
         </main>
+
+        <div class="create-div">
+            <button><a href="/gigs/create">+</a></button>
+        </div>
+
+        <div class="alertDiv hidden" id="alertDiv">
+            <div class="alert">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="icon"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m4.5 12.75 6 6 9-13.5"
+                    />
+                </svg>
+                Applied Successfully!
+            </div>
+        </div>
 
         <script src="js/gigs.js"></script>
     </body>

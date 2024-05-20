@@ -33,9 +33,13 @@ function createListingCard({ title, openings, job_type, price, location, id, cre
 }
 
 function updateListingView({ title, description, openings, skills, job_type, price, location, id, created_at }, creator) {
-    const html = `<div class="head"><img src="${creator.profile_image}" alt="${creator.username}" /><div class="head-text"><div id="jobTitle" class="title">${creator.username}</div><div id="jobPost" class="post">${title}</div> <div class="location"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon" ><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg><span id="jobLocation">${location}</span></div></div></div><div class="body"><h3 class="title">About Company</h3><p id="aboutCompany" class="about-text">${creator.about}</p><hr class="divider" /><h3 class="title">About Job</h3><p id="jobQualifications" class="qualifications">${description}</p><div class="subtitle"><b>Price: </b> <span>₹${price}</span></div><h3 class="title">Skills Required</h3><div class="skills" id="skills">${generatePills(skills)}</div></div><div class="foot"><button id="applyBtn" data-id=${id}>Apply now!</button></div>`;
+    const html = `<div class="head"><img src="${creator.profile_image}" alt="${creator.username}" /><div class="head-text"><div id="jobTitle" class="title">${creator.username}</div><div id="jobPost" class="post">${title}</div></div></div></div><div class="body"><h3 class="title">About Company</h3><p id="aboutCompany" class="about-text">${creator.about}</p><hr class="divider" /><h3 class="title">About Job</h3><p id="jobQualifications" class="qualifications">${description}</p><div class="subtitle"><b>Price: </b> <span>₹${price}</span></div><h3 class="title">Skills Required</h3><div class="skills" id="skills">${generatePills(skills)}</div></div><div class="foot"><button id="applyBtn" data-id=${id}>Apply now!</button></div>`;
 
     document.getElementById("listingInfo").innerHTML = html;
+
+    document.getElementById("applyBtn").addEventListener("click", e => {
+        applyByID(e.target.dataset.id);
+    });
 }
 
 function formatDate(timestamp) {
@@ -49,6 +53,39 @@ function generatePills(skills) {
         return txt + `<div class="pill">${skill}</div>`
     }, "");
 }
+
+async function applyByID(id) {
+    const res = await fetch("/api/offers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            jobID: id,
+            customerID: localStorage.getItem("devID"),
+        })
+    });
+
+    const json = await res.json();
+
+    if (json.created_at) {
+        showAlert();
+    }
+    console.log(json);
+}
+
+function showAlert() {
+    document.getElementById("alertDiv").classList.remove("hidden");
+
+    setTimeout(
+        () =>
+            document
+                .getElementById("alertDiv")
+                .classList.add("hidden"),
+        3000
+    );
+}
+
 
 function main() {
     const url = new URL(window.location);

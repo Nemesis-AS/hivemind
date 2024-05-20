@@ -56,14 +56,14 @@ async function addGig(req, res) {
         created_at: timestamp,
     };
 
-    // const confirmation = await broadcastJSON(json);
+    const confirmation = await broadcastJSON(json);
 
     await Gig.create({
-        // id: confirmation.id,
+        id: confirmation.id,
         ...json,
     });
     res.json({
-        // id: confirmation.id,
+        id: confirmation.id,
         ...json,
     });
 }
